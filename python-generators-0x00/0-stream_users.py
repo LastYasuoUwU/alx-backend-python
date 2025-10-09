@@ -13,7 +13,7 @@ def stream_users():
         database="ALX_prodev"
     )
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM user_data")
+    cursor.execute("SELECT * FROM user_data;")
 
     # Single loop - yield one row at a time
     for row in cursor:
