@@ -30,11 +30,12 @@ def stream_users_in_batches(batch_size):
     
 
 def batch_processing(batch_size):
-    """Proccesses and print user data in batches.
+    """Proccesses and print user data in batches to filter users over the age of25.
     
     Args:
         batch_size (int): The number of users to include in each batch.
     """
     for batch in stream_users_in_batches(batch_size):
         for user in batch:
-            print(user)
+            if user['age']>25:
+                print(user)
