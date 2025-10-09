@@ -17,7 +17,7 @@ def stream_users_in_batches(batch_size):
         database="ALX_prodev"
     )
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM user_data;")
+    cursor.execute("SELECT * FROM user_data where age > 25")
     batch=[]
     for row in cursor:
         batch.append(row)
@@ -35,7 +35,10 @@ def batch_processing(batch_size):
     Args:
         batch_size (int): The number of users to include in each batch.
     """
+    users = []
     for batch in stream_users_in_batches(batch_size):
         for user in batch:
-            if user['age']>25:
-                return user
+            print(user)
+            users.append(user)
+    
+    return users
