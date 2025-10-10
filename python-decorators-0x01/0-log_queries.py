@@ -4,11 +4,16 @@ import functools
 #### decorator to log SQL queries
 def log_queries(func):
     """ 
-    decorator log_queries that logs the SQL query before executing it.
+    Create a decorator to log all SQL queries executed by a function.
+    Learn to intercept function calls to enhance observability.
     """
+    @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        print("Starting query execution...")
-        return func(*args, **kwargs)
+        query = kwargs.get('query', args[0] if args else None)
+        print(f"Executing SQL Query: {query}")
+        result = func(*args, **kwargs)
+        print("Query execution finished ✅")
+        return result
     return wrapper
 
 
@@ -48,4 +53,3 @@ def fetch_all_users(query):
 #### fetch users while logging the query
 users = fetch_all_users(query="SELECT * FROM users;")
 print(f"users: {users}")
-print("Query execution finished ✅")
