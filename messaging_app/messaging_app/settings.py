@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-zx6ftugh5vwaslkr%5=mx!o7frbk*a(99)%_ol+)x!k!*t4-+c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [] 
 
 
 # Application definition
@@ -37,10 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "rest_framework.permissions.IsAuthenticated", 
-    "DEFAULT_AUTHENTICATION_CLASSES", 
-    "rest_framework.authentication.SessionAuthentication"
+    "rest_framework",
+    "chats"
 ]
+
+AUTH_USER_MODEL = 'chats.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,7 +71,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'messaging_app.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
