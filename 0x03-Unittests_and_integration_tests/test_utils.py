@@ -29,6 +29,7 @@ class TestAccessNestedMap(unittest.TestCase):
         # Check that the KeyError message matches the missing key
         self.assertEqual(str(cm.exception), f"'{path[-1]}'")
 
+    @patch("utils.requests.get")
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False}),
