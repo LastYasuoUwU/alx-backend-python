@@ -18,8 +18,8 @@ class TestAccessNestedMap(unittest.TestCase):
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
     @parameterized.expand([
-        ({}, ("a",)),             # Empty dict, key "a" doesn’t exist
-        ({"a": 1}, ("a", "b")),   # "b" doesn’t exist under "a"
+        ({}, ("a",)),             # Empty dict, key "a" doesn't exist
+        ({"a": 1}, ("a", "b")),   # "b" doesn't exist under "a"
     ])
     def test_access_nested_map_exception(self, nested_map, path):
         """Test that KeyError is raised when path is invalid."""
@@ -29,11 +29,11 @@ class TestAccessNestedMap(unittest.TestCase):
         # Check that the KeyError message matches the missing key
         self.assertEqual(str(cm.exception), f"'{path[-1]}'")
 
-    @patch("utils.requests.get")
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False}),
     ])
+    @patch("utils.requests.get")
     def test_get_json(self, test_url, test_payload, mock_get):
         """Test that get_json returns expected result and calls requests.get."""
         # Mock the response from requests.get
