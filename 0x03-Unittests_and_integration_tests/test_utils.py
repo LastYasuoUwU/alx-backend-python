@@ -30,9 +30,9 @@ class TestAccessNestedMap(unittest.TestCase):
         # Check that the KeyError message matches the missing key
         self.assertEqual(str(cm.exception), f"'{path[-1]}'")
 
+
 class TestGetJson(unittest.TestCase):
     """Test cases for utils.get_json function."""
-    
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False}),
@@ -40,7 +40,6 @@ class TestGetJson(unittest.TestCase):
     @patch('utils.requests.get')
     def test_get_json(self, test_url: str, test_payload: Dict, mock_get: Mock) -> None:
         """Test that get_json returns expected result without making HTTP calls.
-        
         Args:
             test_url: The URL to test with
             test_payload: The expected payload to be returned
@@ -50,50 +49,38 @@ class TestGetJson(unittest.TestCase):
         mock_response = Mock()
         mock_response.json.return_value = test_payload
         mock_get.return_value = mock_response
-        
         # Import here to ensure the patch is applied
         from utils import get_json
-        
         # Call the function
         result = get_json(test_url)
-        
         # Assert that requests.get was called exactly once with test_url
         mock_get.assert_called_once_with(test_url)
-        
         # Assert that the result equals the test_payload
         self.assertEqual(result, test_payload)
 
 
 class TestMemoize(unittest.TestCase):
     """Unit tests for the memoize decorator."""
-
     def test_memoize(self):
         """Test that memoize caches the result and only calls method once."""
-        
         class TestClass:
             """Test class for memoization."""
-
             def a_method(self):
                 """Method to be called by memoized property."""
                 return 42
-
             @memoize
             def a_property(self):
                 """Memoized property that calls a_method."""
                 return self.a_method()
-
         # Create an instance of TestClass
         test_obj = TestClass()
-
         # Mock the a_method to track calls
         with patch.object(test_obj, 'a_method', return_value=42) as mock_method:
             # Call a_property twice
             result1 = test_obj.a_property
             result2 = test_obj.a_property
-
             # Assert that both calls return the correct result
             self.assertEqual(result1, 42)
             self.assertEqual(result2, 42)
-
             # Assert that a_method was only called once (memoization working)
             mock_method.assert_called_once()
