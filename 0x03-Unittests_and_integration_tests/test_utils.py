@@ -9,7 +9,7 @@ This module contains test cases for utility functions including:
 
 Classes:
     TestAccessNestedMap: Tests for access_nested_map function
-    TestGetJson: Tests for get_json function  
+    TestGetJson: Tests for get_json function
     TestMemoize: Tests for memoize decorator
 """
 import unittest
