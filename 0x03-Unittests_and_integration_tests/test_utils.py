@@ -38,7 +38,7 @@ class TestGetJson(unittest.TestCase):
         ("http://holberton.io", {"payload": False}),
     ])
     @patch('utils.requests.get')
-    def test_get_json(self, test_url: str, test_payload: Dict, mock_get: Mock)->None:
+    def test_get_json(self,test_url:str,test_payload:Dict,mock_get:Mock) -> None:
         """Test that get_json returns expected result without making HTTP calls
         Args:
             test_url: The URL to test with
@@ -68,7 +68,7 @@ class TestMemoize(unittest.TestCase):
             def a_method(self):
                 """Method to be called by memoized property."""
                 return 42
-            
+
             @memoize
             def a_property(self):
                 """Memoized property that calls a_method."""
@@ -76,7 +76,7 @@ class TestMemoize(unittest.TestCase):
         # Create an instance of TestClass
         test_obj = TestClass()
         # Mock the a_method to track calls
-        with patch.object(test_obj, 'a_method', return_value=42) as mock_method:
+        with patch.object(test_obj,'a_method',return_value=42) as mock_method:
             # Call a_property twice
             result1 = test_obj.a_property
             result2 = test_obj.a_property
