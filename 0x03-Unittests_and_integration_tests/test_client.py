@@ -151,6 +151,28 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """Tear down class method to stop the patcher"""
         cls.get_patcher.stop()
 
+    def test_public_repos(self):
+        """Test public_repos method returns expected repos"""
+        # Create client instance
+        client = GithubOrgClient("google")
+
+        # Call public_repos method
+        result = client.public_repos()
+
+        # Assert the result matches expected_repos from fixtures
+        self.assertEqual(result, self.expected_repos)
+
+    def test_public_repos_with_license(self):
+        """Test public_repos with license filter"""
+        # Create client instance
+        client = GithubOrgClient("google")
+
+        # Call public_repos with apache-2.0 license filter
+        result = client.public_repos(license="apache-2.0")
+
+        # Assert the result matches apache2_repos from fixtures
+        self.assertEqual(result, self.apache2_repos)
+
 
 if __name__ == "__main__":
     unittest.main()
