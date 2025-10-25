@@ -33,29 +33,26 @@ class TestAccessNestedMap(unittest.TestCase):
 
 class TestGetJson(unittest.TestCase):
     """Test cases for utils.get_json function."""
+
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False}),
     ])
     @patch('utils.requests.get')
-    def test_get_json(self, test_url: str, test_payload: Dict, mock_get: Mock) -> None:
-        """Test that get_json returns expected result without making HTTP calls.
-        Args:
-            test_url: The URL to test with
-            test_payload: The expected payload to be returned
-            mock_get: Mocked requests.get function
-        """
-        # Configure the mock to return a Mock object with a json method
+    def test_get_json(self, test_url, test_payload, mock_get):
+        """Test that get_json returns expected result."""
+        # Configure mock to return a Mock with json method
         mock_response = Mock()
         mock_response.json.return_value = test_payload
         mock_get.return_value = mock_response
-        # Import here to ensure the patch is applied
-        from utils import get_json
+
         # Call the function
         result = get_json(test_url)
-        # Assert that requests.get was called exactly once with test_url
+
+        # Assert requests.get was called once with test_url
         mock_get.assert_called_once_with(test_url)
-        # Assert that the result equals the test_payload
+
+        # Assert the result equals the test_payload
         self.assertEqual(result, test_payload)
 
 
@@ -64,7 +61,7 @@ class TestMemoize(unittest.TestCase):
 
     def test_memoize(self):
         """Test that memoize caches the result and only calls method once."""
-        
+
         class TestClass:
             """Test class for memoization."""
 
