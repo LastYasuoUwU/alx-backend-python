@@ -1,4 +1,17 @@
 #!/usr/bin/env python3
+"""
+Unit tests for utils module.
+
+This module contains test cases for utility functions including:
+- access_nested_map: Navigate nested dictionary structures
+- get_json: Fetch JSON data from URLs
+- memoize: Cache function results for performance optimization
+
+Classes:
+    TestAccessNestedMap: Tests for access_nested_map function
+    TestGetJson: Tests for get_json function  
+    TestMemoize: Tests for memoize decorator
+"""
 import unittest
 from unittest.mock import patch, Mock
 from parameterized import parameterized
