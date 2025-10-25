@@ -60,7 +60,7 @@ class TestMemoize(unittest.TestCase):
     """Unit tests for the memoize decorator."""
 
     def test_memoize(self):
-        """Test that memoize caches the result and only calls method once."""
+        """Test that memoize caches result and calls method once."""
 
         class TestClass:
             """Test class for memoization."""
@@ -78,14 +78,16 @@ class TestMemoize(unittest.TestCase):
         test_obj = TestClass()
 
         # Mock the a_method to track calls
-        with patch.object(test_obj, 'a_method', return_value=42) as mock_method:
+        with patch.object(
+            test_obj, 'a_method', return_value=42
+        ) as mock_method:
             # Call a_property twice
             result1 = test_obj.a_property
             result2 = test_obj.a_property
 
-            # Assert that both calls return the correct result
+            # Assert that both calls return correct result
             self.assertEqual(result1, 42)
             self.assertEqual(result2, 42)
 
-            # Assert that a_method was only called once (memoization working)
+            # Assert a_method was only called once
             mock_method.assert_called_once()
