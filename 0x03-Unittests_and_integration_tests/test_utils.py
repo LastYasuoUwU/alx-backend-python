@@ -17,7 +17,7 @@ from unittest.mock import patch, Mock
 from parameterized import parameterized
 from utils import access_nested_map, get_json, memoize
 from typing import Dict
-
+from fixtures import TEST_PAYLOAD
 
 class TestAccessNestedMap(unittest.TestCase):
     """Unit tests for the access_nested_map function."""
