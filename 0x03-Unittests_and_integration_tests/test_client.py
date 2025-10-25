@@ -39,7 +39,7 @@ class TestGithubOrgClient(unittest.TestCase):
             "login": "test",
             "id": 12345
         }
-        
+
         # Use patch as a context manager to mock the org property
         with patch.object(
             GithubOrgClient,
@@ -65,7 +65,6 @@ class TestGithubOrgClient(unittest.TestCase):
             {"name": "repo3", "license": {"key": "mit"}},
         ]
         mock_get_json.return_value = test_payload
-        
         # Use patch as a context manager to mock _public_repos_url
         with patch.object(
             GithubOrgClient,
@@ -74,18 +73,13 @@ class TestGithubOrgClient(unittest.TestCase):
         ) as mock_public_repos_url:
             # Create client instance
             client = GithubOrgClient("test")
-            
             # Call public_repos method
-            result = client.public_repos()
-            
+            result = client.public_repos()            
             # Expected list of repo names from the payload
             expected_repos = ["repo1", "repo2", "repo3"]
-            
             # Assert the result matches expected repos
             self.assertEqual(result, expected_repos)
-            
             # Assert _public_repos_url was accessed once
             mock_public_repos_url
-            
             # Assert get_json was called once
             mock_get_json.assert_called_once()
