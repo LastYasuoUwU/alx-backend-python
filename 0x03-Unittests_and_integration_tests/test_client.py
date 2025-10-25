@@ -8,7 +8,6 @@ from client import GithubOrgClient
 
 class TestGithubOrgClient(unittest.TestCase):
     """Test cases for GithubOrgClient class"""
-
     @parameterized.expand([
         ("google",),
         ("abc",),
@@ -20,9 +19,9 @@ class TestGithubOrgClient(unittest.TestCase):
         expected_response = {"login": org_name, "id": 12345}
         mock_get_json.return_value = expected_response
         
-        # Create client instance and call org method
+        # Create client instance and access org property
         client = GithubOrgClient(org_name)
-        result = client.org()
+        result = client.org
         
         # Assert get_json was called once with the correct URL
         expected_url = f"https://api.github.com/orgs/{org_name}"
