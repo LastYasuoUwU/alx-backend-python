@@ -29,3 +29,28 @@ class TestGithubOrgClient(unittest.TestCase):
         
         # Assert the result matches the mocked return value
         self.assertEqual(result, expected_response)
+
+    @patch('client.GithubOrgClient.org', new_callable=lambda: property(lambda self: {"repos_url": "https://api.github.com/orgs/test/repos"}))
+    def test_public_repos_url(self, mock_org):
+        """Test that _public_repos_url returns the expected URL"""
+        # Create a known payload
+        expected_payload = {
+            "repos_url": "https://api.github.com/orgs/test/repos",
+            "login": "test",
+            "id": 12345
+        }
+        
+        # Use patch as a context manager to mock the org property
+        with patch.object(
+            GithubOrgClient,
+            'org',
+            new_callable=lambda: property(lambda self: expected_payload)
+        ):
+            # Create client instance
+            client = GithubOrgClient("test")
+            
+            # Access _public_repos_url
+            result = client._public_repos_url
+            
+            # Assert the result is the expected repos_url from the payload
+            self.assertEqual(result, expected_payload["repos_url"])
