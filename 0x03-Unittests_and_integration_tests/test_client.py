@@ -8,6 +8,7 @@ from client import GithubOrgClient
 
 class TestGithubOrgClient(unittest.TestCase):
     """Test cases for GithubOrgClient class"""
+
     @parameterized.expand([
         ("google",),
         ("abc",),
@@ -18,19 +19,26 @@ class TestGithubOrgClient(unittest.TestCase):
         # Setup mock return value
         expected_response = {"login": org_name, "id": 12345}
         mock_get_json.return_value = expected_response
-        
+
         # Create client instance and access org property
         client = GithubOrgClient(org_name)
         result = client.org
-        
+
         # Assert get_json was called once with the correct URL
         expected_url = f"https://api.github.com/orgs/{org_name}"
         mock_get_json.assert_called_once_with(expected_url)
-        
+
         # Assert the result matches the mocked return value
         self.assertEqual(result, expected_response)
 
-    @patch('client.GithubOrgClient.org', new_callable=lambda: property(lambda self: {"repos_url": "https://api.github.com/orgs/test/repos"}))
+    @patch(
+        'client.GithubOrgClient.org',
+        new_callable=lambda: property(
+            lambda self: {
+                "repos_url": "https://api.github.com/orgs/test/repos"
+            }
+        )
+    )
     def test_public_repos_url(self, mock_org):
         """Test that _public_repos_url returns the expected URL"""
         # Create a known payload
@@ -48,11 +56,11 @@ class TestGithubOrgClient(unittest.TestCase):
         ):
             # Create client instance
             client = GithubOrgClient("test")
-            
+
             # Access _public_repos_url
             result = client._public_repos_url
-            
-            # Assert the result is the expected repos_url from the payload
+
+            # Assert the result is the expected repos_url
             self.assertEqual(result, expected_payload["repos_url"])
 
     @patch('client.get_json')
@@ -65,21 +73,33 @@ class TestGithubOrgClient(unittest.TestCase):
             {"name": "repo3", "license": {"key": "mit"}},
         ]
         mock_get_json.return_value = test_payload
+
         # Use patch as a context manager to mock _public_repos_url
         with patch.object(
             GithubOrgClient,
             '_public_repos_url',
-            new_callable=lambda: property(lambda self: "https://api.github.com/orgs/test/repos")
+            new_callable=lambda: property(
+                lambda self: "https://api.github.com/orgs/test/repos"
+            )
         ) as mock_public_repos_url:
             # Create client instance
             client = GithubOrgClient("test")
+
             # Call public_repos method
-            result = client.public_repos()            
+            result = client.public_repos()
+
             # Expected list of repo names from the payload
             expected_repos = ["repo1", "repo2", "repo3"]
+
             # Assert the result matches expected repos
             self.assertEqual(result, expected_repos)
+
             # Assert _public_repos_url was accessed once
             mock_public_repos_url
+
             # Assert get_json was called once
             mock_get_json.assert_called_once()
+
+
+if __name__ == "__main__":
+    unittest.main()
