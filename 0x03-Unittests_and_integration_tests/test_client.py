@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import patch, Mock
 from parameterized import parameterized
 from client import GithubOrgClient
-from fixture import org_payload, repos_payload, expected_repos, apache2_repos
+from fixture import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
